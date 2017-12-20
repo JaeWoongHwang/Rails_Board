@@ -1,0 +1,47 @@
+<div class="card" style="width: 20rem;">
+  <div class="card-body">
+    <h4 class="card-title"><%=@post.title%></h4>
+    <h6 class="card-subtitle mb-2 text-muted"><%=@post.user.email%></h6>
+    <p class="card-text"><%=@post.content%></p>
+    <button type="button" class="btn btn-outline-primary"><a href= "/posts/edit/<%= @post.id %>" class="card-link"></a>EDIT</button>
+    <button type="button" class="btn btn-outline-danger"><a href= "/posts/destroy/<%= @post.id %>" class="card-link"></a> DELETE</button>
+  </div>
+</div>
+
+<!-- <p>
+Writer: <%=@post.user.email%><br>
+Title : <%=@post.title%><br>
+Content : <%=@post.content%><br>
+<a href="/posts/destroy/<%= @post.id %>">[DELETE]</a>
+<a href="/posts/edit/<%= @post.id %>">[EDIT]</a>
+데이터베이스에서 값을 찾아온다.
+그 값을 수정하고 다시 적용한다.
+</p> -->
+
+<form action="/posts/<%= @post.id %>/add_comment">
+  <input type="text" name ="content">
+  <input type="submit"value="SUBMIT">
+</form>
+<p>[Comment list]</p>
+<% @post.comments.each do |comment|  %>
+<p><%= comment.content%> | <%=comment.user.email%></p>
+<% end %>
+
+<!-- <form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  <div class="form-check">
+    <label class="form-check-label">
+      <input type="checkbox" class="form-check-input">
+      Check me out
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form> -->

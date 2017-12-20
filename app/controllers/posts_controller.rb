@@ -1,6 +1,14 @@
 class PostsController < ApplicationController
+  # before action을 통해 잠근다.
+  before_action :authorize
+
   def index
-    @posts = Post.all.reverse
+    @posts = Post.all
+    @comments = Comment.all
+  end
+
+  def show
+    @post = Post.find(params[:id])
   end
 
   def new
@@ -9,6 +17,8 @@ class PostsController < ApplicationController
 
   def create
     Post.create(
+      # 현재 접속한 유저의 정보가 들어가 있어야 함
+      user_id: current_user.id,
       title: params[:title],
       content: params[:content]
     )
@@ -39,6 +49,16 @@ class PostsController < ApplicationController
     )
 
     redirect_to '/'
+  end
+
+  def add_comment
+    Comment.create(
+      user_id: current_user.id,
+      content: params[:content],
+      post_id: params[:id]
+    )
+
+    redirect_to :back #{}"/posts/show/#{params[:id]}"
   end
 
 end
